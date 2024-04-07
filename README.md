@@ -1,6 +1,7 @@
 # OG-Node-install
 
 Explorer: Explorer: https://explorer.validator247.com/zero-gravity-testnet/staking
+
 rpc: https://0g-testnet-rpc.validator247.com/
 
 
