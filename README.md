@@ -177,5 +177,51 @@ Create a validator
         --gas=500000 --gas-prices=99999aevmos \
         -y
 
+Edit validator
+
+        evmosd tx staking edit-validator --website="<WEBSITE>" --details="<DESCRIPTION>" --moniker="<NEW_MONIKER>" --from=$WALLET_NAME --gas=500000 --gas-prices=99999aevmos -y
+
+# Useful commands
+
+Query your validator
+
+        evmosd q staking validator $(evmosd keys show $WALLET_NAME --bech val -a)
+
+Unjail your validator
+
+        evmosd tx slashing unjail --from $WALLET_NAME --gas=500000 --gas-prices=99999aevmos -y
+
+Delegate tokens to your validator
+
+        evmosd tx staking delegate $(evmosd keys show $WALLET_NAME --bech val -a)  <AMOUNT>aevmos --from $WALLET_NAME --gas=500000 --gas-prices=99999aevmos -y
+
+Send tokens between wallets
+
+        evmosd tx bank send $WALLET_NAME <TO_WALLET> <AMOUNT>aevmos --gas=500000 --gas-prices=99999aevmos -y
+
+Check logs
+
+        sudo journalctl -u ogd -f -o cat
+
+Upgrade the node
+
+        cd 0g-evmos
+        git fetch
+        git checkout tags/<version>
+        make install
+        evmosd version
+        
+        #Restrt the node
+        sudo systemctl restart ogd && sudo journalctl -u ogd -f -o cat
+
+Delete the node from the server
+
+        sudo systemctl stop ogd
+        sudo systemctl disable ogd
+        sudo rm /etc/systemd/system/ogd.service
+        rm -rf $HOME/.evmosd $HOME/0g-evmos
+
+        
+# Done! Thank you !
                 
        
