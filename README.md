@@ -105,15 +105,45 @@ Set min gas price
      WantedBy=multi-user.target
      EOF
 
- Start the node
-
      sudo systemctl daemon-reload && \
      sudo systemctl enable ogd && \
-     sudo systemctl restart ogd && \
-     sudo journalctl -u ogd -f -o cat
+
+ # Download Snapshot
+
+ Download latest snapshot from our endpoint
+
+         wget https://rpc-zero-gravity-testnet.trusted-point.com/latest_snapshot.tar.lz4
+
+ Stop the node
+
+         sudo systemctl stop ogd
+
+ Backup priv_validator_state.json
+
+         cp $HOME/.evmosd/data/priv_validator_state.json $HOME/.evmosd/priv_validator_state.json.backup
+
+  Reset DB
+
+          evmosd tendermint unsafe-reset-all --home $HOME/.evmosd --keep-addr-book
+
+ Extract files fromt the arvhive
+
+         lz4 -d -c ./latest_snapshot.tar.lz4 | tar -xf - -C $HOME/.evmosd
+
+Move priv_validator_state.json back
+
+        mv $HOME/.evmosd/priv_validator_state.json.backup $HOME/.evmosd/data/priv_validator_state.json
+
+Start the node
+
+        sudo systemctl restart ogd && sudo journalctl -u ogd -f -o cat
+
+Check the synchronization status
+
+        evmosd status | jq .SyncInfo
 
 
-Create a wallet for your validator
+# Create a wallet for your validator
 
 Create wallet
 
