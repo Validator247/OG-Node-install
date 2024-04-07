@@ -102,23 +102,23 @@ Set min gas price
 
  Create a service file
 
-     sudo tee /etc/systemd/system/ogd.service > /dev/null <<EOF
-     [Unit]
-     Description=OG Node
-     After=network.target
-     
-     [Service]
-     User=$USER
-     Type=simple
-     ExecStart=$(which evmosd) start --home $HOME/.evmosd
-     Restart=on-failure
-     LimitNOFILE=65535
-     
-     [Install]
-     WantedBy=multi-user.target
-     EOF
+    sudo tee /etc/systemd/system/ogd.service > /dev/null <<EOF
+    [Unit]
+    Description=OG Node
+    After=network.target
 
-     sudo systemctl daemon-reload && sudo systemctl enable ogd
+    [Service]
+    User=$USER
+    Type=simple
+    ExecStart=$(which evmosd) start --home $HOME/.evmosd
+    Restart=on-failure
+    LimitNOFILE=65535
+
+    [Install]
+    WantedBy=multi-user.target
+    EOF
+
+    sudo systemctl daemon-reload && sudo systemctl enable ogd
 
  # Download Snapshot
 
