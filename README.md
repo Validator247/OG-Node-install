@@ -118,8 +118,7 @@ Set min gas price
      WantedBy=multi-user.target
      EOF
 
-     sudo systemctl daemon-reload && \
-     sudo systemctl enable ogd && \
+     sudo systemctl daemon-reload && sudo systemctl enable ogd
 
  # Download Snapshot
 
