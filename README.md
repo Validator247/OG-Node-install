@@ -112,5 +112,40 @@ Set min gas price
      sudo systemctl restart ogd && \
      sudo journalctl -u ogd -f -o cat
 
-         
+
+Create a wallet for your validator
+
+Create wallet
+
+        evmosd keys add $WALLET_NAME
+
+Extract the HEX address to request some tokens from the faucet
+
+        echo "0x$(evmosd debug addr $(evmosd keys show $WALLET_NAME -a) | grep hex | awk '{print $3}')"
+
+Faucet:  https://faucet.0g.ai/
+
+Check wallet balance
+
+        evmosd q bank balances $(evmosd keys show $WALLET_NAME -a) 
+
+Create a validator
+
+        evmosd tx staking create-validator \
+        --amount=10000000000000000aevmos \
+        --pubkey=$(evmosd tendermint show-validator) \
+        --moniker=$MONIKER \
+        --chain-id=$CHAIN_ID \
+        --commission-rate=0.05 \
+        --commission-max-rate=0.10 \
+        --commission-max-change-rate=0.01 \
+        --min-self-delegation=1 \
+        --from=$WALLET_NAME \
+        --identity="" \
+        --website="" \
+        --details="0G to the moon!" \
+        --gas=500000 --gas-prices=99999aevmos \
+        -y
+
+                
        
