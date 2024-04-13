@@ -148,7 +148,7 @@ Move priv_validator_state.json back
 
 Start the node
 
-        sudo systemctl restart ogd && sudo journalctl -u ogd -f -o cat
+        sudo systemctl restart evmosd && sudo journalctl -u evmosd -f -o cat
 
 Check the synchronization status
 
